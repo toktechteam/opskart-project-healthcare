@@ -1,3 +1,4 @@
+# custom_admin/models.py
 from django.db import models
 
 class AdminModel(models.Model):
