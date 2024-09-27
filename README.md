@@ -2,6 +2,7 @@
 
 ## Project Structure
 
+```
 myhealthapp/
 ├── manage.py
 ├── myhealthapp/
@@ -10,7 +11,7 @@ myhealthapp/
 │   ├── urls.py
 │   ├── wsgi.py
 │   ├── asgi.py
-├���─ patients/
+├-─ patients/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
@@ -48,6 +49,8 @@ myhealthapp/
 │       ├── admin/
 │           ├── dashboard.html
 
+
+```
 ## Explanation of Each Folder and File
 
 1. **`myhealthapp/` (Project Root)**
@@ -85,11 +88,11 @@ To run the tests for your Django application, use the following command:
 
 ```sh
 python manage.py test
-
+```
 ###### Run In Local ######
 
 To run your Django project on your local laptop, follow these steps:
-Prerequisites
+**`Prerequisites`**
 
 Python: Ensure you have Python 3.6+ installed. You can download it from python.org.
 pip: Python's package installer. It comes with Python 3.6+.
@@ -102,24 +105,42 @@ git clone https://github.com/yourusername/myhealthapp.git
 cd myhealthapp
 ```
 
-Create a Virtual Environment:
-```python3 -m venv venv``` # On Windows use `python` instead of `python3`
+**`Create a Virtual Environment:`**
+```
+python3 -m venv venv # On Windows use `python` instead of `python3`
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
 
-## Install Dependencies:
+**`Install Dependencies:`**
+```
 pip install -r requirements.txt
-Set Up the Database:
-python manage.py migrate
-Create a Superuser:
-python manage.py createsuperuser
-Run the Development Server:
-python manage.py runserver
-Access the Application
-Open your web browser and go to http://127.0.0.1:8000/.
+```
 
-Running Tests
+**`Set Up the Database:`**
+```
+python manage.py migrate
+```
+
+**`Create a Superuser:`**
+```
+python manage.py createsuperuser
+```
+
+**`Run the Development Server:`**
+```
+python manage.py runserver
+```
+
+**`Access the Application`**
+```
+Open your web browser and go to http://127.0.0.1:8000/.
+```
+
+**`Running Tests`**
 To run the tests for your Django application, use the following command:
+```
 python manage.py test
+```
 
 Software Versions
 Python: 3.6+
