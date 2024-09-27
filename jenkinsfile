@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+
+    environment {
+        EC2_IP = 'your_ec2_ip'
+        EC2_USER = 'ec2-user'
+        SONARQUBE_SERVER = 'your_sonarqube_server'
+        SONARQUBE_TOKEN = 'your_sonarqube_token'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/your-repo/your-django-app.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                source venv/bin/activate
+                coverage run --source='.' manage.py test
+                coverage xml
+                '''
+            }
+        }
+
+        stage('Code Coverage') {
+            steps {
+                cobertura coberturaReportFile: 'coverage.xml'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    source venv/bin/activate
+                    sonar-scanner \
+                    -Dsonar.projectKey=your_project_key \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=$SONARQUBE_SERVER \
+                    -Dsonar.login=$SONARQUBE_TOKEN
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sh '''
+                scp -r * $EC2_USER@$EC2_IP:/path/to/your/app
+                ssh $EC2_USER@$EC2_IP << EOF
+                cd /path/to/your/app
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                python manage.py migrate
+                python manage.py runserver 0.0.0.0:8000 &
+                EOF
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            junit 'reports/*.xml'
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment List</title>
+</head>
+<body>
+<h2>Appointment List</h2>
+<ul>
+    {% for appointment in appointments %}
+    <li>{{ appointment.patient }} with {{ appointment.provider }} on {{ appointment.date }} at {{ appointment.time }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

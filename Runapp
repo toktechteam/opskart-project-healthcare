@@ -1,0 +1,63 @@
+Summary of Steps
+Set up EC2 instance:
+ssh -i your_key.pem ec2-user@your_ec2_ip
+sudo yum update -y
+sudo yum install python3 -y
+sudo yum install git -y
+
+# Prepare Jenkins:
+Install Jenkins and necessary plugins.
+Create Jenkinsfile:
+Use the provided Jenkinsfile.
+
+# Write test cases:
+Ensure test cases are in place (e.g., patients/tests.py).
+
+# Configure SonarQube and Cobertura:
+Set up and configure SonarQube and Cobertura in Jenkins.
+
+###### Run In Local ######
+
+To run your Django project on your local laptop, follow these steps:
+Prerequisites
+Python: Ensure you have Python 3.6+ installed. You can download it from python.org.
+pip: Python's package installer. It comes with Python 3.6+.
+Virtualenv: A tool to create isolated Python environments.
+Steps
+Clone the Repository:
+git clone https://github.com/yourusername/myhealthapp.git
+cd myhealthapp
+Create a Virtual Environment:
+python3 -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+Install Dependencies:
+pip install -r requirements.txt
+Set Up the Database:
+python manage.py migrate
+Create a Superuser:
+python manage.py createsuperuser
+Run the Development Server:
+python manage.py runserver
+Access the Application
+Open your web browser and go to http://127.0.0.1:8000/.
+
+Running Tests
+To run the tests for your Django application, use the following command:
+python manage.py test
+
+Software Versions
+Python: 3.6+
+Django: As specified in your requirements.txt
+pip: Latest version
+Additional Tools
+Git: For version control. Install from git-scm.com.
+
+Summary
+Clone the repository.
+Create and activate a virtual environment.
+Install dependencies.
+Set up the database.
+Create a superuser.
+Run the development server.
+Access the application in your browser.
+Run tests as needed.

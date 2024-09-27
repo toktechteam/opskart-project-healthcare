@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule</title>
+</head>
+<body>
+<h2>Schedule</h2>
+<ul>
+    {% for schedule in schedules %}
+    <li>{{ schedule.available_from }} to {{ schedule.available_to }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
