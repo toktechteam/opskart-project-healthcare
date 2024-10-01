@@ -58,7 +58,7 @@ ROOT_URLCONF = 'myhealthapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'myhealthapp' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
