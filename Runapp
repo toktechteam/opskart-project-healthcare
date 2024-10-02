@@ -24,26 +24,52 @@ Python: Ensure you have Python 3.6+ installed. You can download it from python.o
 pip: Python's package installer. It comes with Python 3.6+.
 Virtualenv: A tool to create isolated Python environments.
 Steps
-Clone the Repository:
-git clone https://github.com/yourusername/myhealthapp.git
-cd myhealthapp
-Create a Virtual Environment:
-python3 -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-Install Dependencies:
-pip install -r requirements.txt
-Set Up the Database:
-python manage.py migrate
-Create a Superuser:
-python manage.py createsuperuser
-Run the Development Server:
-python manage.py runserver
-Access the Application
-Open your web browser and go to http://127.0.0.1:8000/.
 
-Running Tests
+$ Clone the Repository:
+$ git clone https://github.com/yourusername/myhealthapp.git
+$ cd myhealthapp
+# Create a Virtual Environment:
+$ python3 -m venv venv
+$ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
+# Navigate to the Project Directory and Set Up Virtual Environment:  
+$ cd /home/ec2-user/opskart-project-healthcare
+$ python3 -m venv venv
+$ . venv/bin/activate
+
+# Install Dependencies:  
+$ pip install -r requirements.txt
+$ Remove Existing Migration Files:  
+$ find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+$ find . -path "*/migrations/*.pyc"  -delete
+# Remove the SQLite Database File:  
+$ rm db.sqlite3
+
+# Create and Apply Migrations:  
+$ python3 manage.py makemigrations patients
+$ python3 manage.py migrate patients
+
+$ python3 manage.py makemigrations providers
+$ python3 manage.py migrate providers
+
+$ python3 manage.py makemigrations appointments
+$ python3 manage.py migrate appointments
+
+$ python3 manage.py makemigrations custom_admin
+$ python3 manage.py migrate custom_admin
+
+$ python3 manage.py migrate
+
+# Create a Superuser:  
+$ python3 manage.py createsuperuser
+
+# Run the Development Server:  
+$ python3 manage.py runserver 0.0.0.0:8000
+
+# Running Tests
+
 To run the tests for your Django application, use the following command:
-python manage.py test
+$ python manage.py test
 
 Software Versions
 Python: 3.6+
