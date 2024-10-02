@@ -74,10 +74,12 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sh """
-                scp myhealthapp-${VERSION}.tar.gz ${DEPLOY_USER}@${EC2_IP}:${DEPLOY_DIR}
-                ssh ${DEPLOY_USER}@${EC2_IP} 'cd ${DEPLOY_DIR} && tar -xzf myhealthapp-${VERSION}.tar.gz && . venv/bin/activate && python3 manage.py migrate && sudo systemctl restart gunicorn'
-                """
+                sshagent(['your-credentials-id']) {
+                    sh """
+                    ssh ${DEPLOY_USER}@${EC2_IP} 'curl -u user:password -O ${NEXUS_URL}/myhealthapp-${VERSION}.tar.gz -o ${DEPLOY_DIR}/myhealthapp-${VERSION}.tar.gz'
+                    ssh ${DEPLOY_USER}@${EC2_IP} 'cd ${DEPLOY_DIR} && tar -xzf myhealthapp-${VERSION}.tar.gz && . venv/bin/activate && python3 manage.py migrate && sudo systemctl restart gunicorn'
+                    """
+                }
             }
         }
     }
