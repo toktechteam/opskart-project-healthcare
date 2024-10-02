@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Clone Code') {
             steps {
-                git 'https://github.com/your-repo/opskart-project-healthcare.git'
+                git branch: 'master', url: 'https://github.com/toktechteam/opskart-project-healthcare.git', credentialsId: 'github'
             }
         }
 
