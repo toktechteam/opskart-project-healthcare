@@ -5,7 +5,7 @@ pipeline {
         GIT_COMMIT_SHORT = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         VERSION = "${GIT_COMMIT_SHORT}-${BUILD_NUMBER}"
         NEXUS_URL = 'http://nexus.example.com/repository/maven-releases/'
-        SONARQUBE_URL = 'http://sonarqube.example.com'
+        SONARQUBE_URL = 'http://localhost:9000'
         EC2_IP = 'your-ec2-ip-address'
         DEPLOY_USER = 'ec2-user'
         DEPLOY_DIR = '/home/ec2-user/opskart-project-healthcare'
@@ -30,16 +30,16 @@ pipeline {
                 sh '. venv/bin/activate && python3 manage.py test'
             }
         }
-
-        stage('Code Scan') {
+        
+         stage('Code Scan') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('SonarQube', credentialsId: 'sonarqube-token') {
                         sh '. venv/bin/activate && sonar-scanner -Dsonar.projectKey=myhealthapp -Dsonar.sources=. -Dsonar.host.url=${SONARQUBE_URL}'
                     }
                 }
             }
-        }
+        }        
 
         stage('Publish to Cobertura') {
             steps {
