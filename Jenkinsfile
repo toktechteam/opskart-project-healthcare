@@ -9,7 +9,7 @@ pipeline {
         EC2_IP = 'your-ec2-ip-address'
         DEPLOY_USER = 'ec2-user'
         DEPLOY_DIR = '/home/ec2-user/opskart-project-healthcare'
-        SONAR_TOKEN=
+
     }
 
     stages {
