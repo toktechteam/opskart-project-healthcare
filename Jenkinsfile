@@ -9,6 +9,7 @@ pipeline {
         EC2_IP = 'your-ec2-ip-address'
         DEPLOY_USER = 'ec2-user'
         DEPLOY_DIR = '/home/ec2-user/opskart-project-healthcare'
+        SONAR_TOKEN=
     }
 
     stages {
@@ -31,15 +32,19 @@ pipeline {
             }
         }
         
-         stage('Code Scan') {
+        stage('Code Scan') {
             steps {
-                script {
-                    withSonarQubeEnv('SonarQube', credentialsId: 'sonarqube-token') {
-                        sh '. venv/bin/activate && sonar-scanner -Dsonar.projectKey=myhealthapp -Dsonar.sources=. -Dsonar.host.url=${SONARQUBE_URL}'
+                withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                    . venv/bin/activate && sonar-scanner \
+                    -Dsonar.projectKey=myhealthapp \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=${SONARQUBE_URL} \
+                    -Dsonar.login=${SONAR_TOKEN}
+                    '''
                     }
                 }
-            }
-        }        
+             }                
 
         stage('Publish to Cobertura') {
             steps {
